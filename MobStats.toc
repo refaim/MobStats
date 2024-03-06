@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: MobStats
+## Author: Refaim
+## Notes: Displays mob stats in the game tooltip
+## Version: 1.0
+
+MobStats.lua
