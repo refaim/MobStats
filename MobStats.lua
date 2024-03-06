@@ -1,8 +1,11 @@
----@shape CompositeStatDTO
----@field base number
----@field positive_buff number
----@field negative_buff number
----@field effective number
+setfenv(1, MobStats)
+
+---@shape ResistanceDTO
+---@field amount number
+
+---@shape ArmorDTO
+---@field amount number
+---@field damage_reduction number
 
 ---@shape DamageDTO
 ---@field speed number
@@ -15,42 +18,21 @@
 ---@shape AllStatsDTO
 ---@field main_hand_damage DamageDTO|nil
 ---@field offhand_damage DamageDTO|nil
----@field armor CompositeStatDTO|nil
----@field resists table<ResistId, CompositeStatDTO|nil>
+---@field armor ArmorDTO|nil
+---@field resists table<ResistId, ResistanceDTO|nil>
 
 ---@param mob UnitId
 ---@param index 0|1|2|3|4|5|6
----@return CompositeStatDTO|nil
+---@return ResistanceDTO|nil
 local function get_resistance(mob, index)
-    local base, effective, positive_buff, negative_buff = UnitResistance(mob, index)
+    local base, effective, _, _ = UnitResistance(mob, index)
     if base == 0 and effective == 0 then
         return nil
     end
 
     return {
-        base = base,
-        effective = effective,
-        positive_buff = positive_buff,
-        negative_buff = negative_buff,
+        amount = effective,
     }
-end
-
--- TODO move utils to separate file?
----@param n number|nil
-local function zero_to_nil(n)
-    if n == 0 then
-        return nil
-    end
-    return n
-end
-
----@param value boolean
----@return wowboolean
-local function boolean_to_wowboolean(value)
-    if value then
-        return 1
-    end
-    return nil
 end
 
 ---@param raw_speed number|nil
@@ -70,12 +52,27 @@ local function make_damage_dto(raw_speed, raw_min_damage, raw_max_damage)
     local min_damage = --[[---@type number]] raw_min_damage
     local max_damage = --[[---@type number]] raw_max_damage
 
-    -- TODO точно ли в speed и min/max damage учтены временные модификаторы? а процент? в BCS вручную оно считается, надо проверить, скорость можно через щит мороза, а урон как?
     return {
         speed = speed,
         min_damage = min_damage,
         max_damage = max_damage,
-        dps = (min_damage + (max_damage - min_damage) / 2.0) / speed,
+        dps = ((min_damage + max_damage) / 2.0) / speed,
+    }
+end
+
+---@param unit UnitId
+---@param player_level number
+---@return ArmorDTO|nil
+local function get_armor(unit, player_level)
+    local stat_or_nil = get_resistance(unit, 0)
+    if stat_or_nil == nil then
+        return nil
+    end
+
+    local stat = --[[---@type ResistanceDTO]] stat_or_nil
+    return {
+        amount = stat.amount,
+        damage_reduction = (stat.amount / (stat.amount + 400 + 85 * player_level)) * 100
     }
 end
 
@@ -94,14 +91,14 @@ local function get_stats(unit)
         return nil
     end
 
+    local player_level = UnitLevel("player")
     local mh_speed, oh_speed = UnitAttackSpeed(unit)
-    -- TODO проверить, точно ли бонусы не надо вручную применить, см. PaperDollFrame.lua
     local mh_min_damage, mh_max_damage, oh_min_damage, oh_max_damage, _, _, _ = UnitDamage(unit)
 
     return {
         main_hand_damage = make_damage_dto(mh_speed, mh_min_damage, mh_max_damage),
         offhand_damage = make_damage_dto(oh_speed, oh_min_damage, oh_max_damage),
-        armor = get_resistance(unit, 0),
+        armor = get_armor(unit, player_level),
         resists = {
             holy = get_resistance(unit, 1),
             fire = get_resistance(unit, 2),
@@ -111,27 +108,6 @@ local function get_stats(unit)
             arcane = get_resistance(unit, 6),
         },
     }
-end
-
----@param strings string[]
----@param glue string
----@return string
-local function strjoin(strings, glue)
-    local result = ""
-    for _, s in ipairs(strings) do
-        if result == "" then
-            result = s
-        else
-            result = result .. glue .. s
-        end
-    end
-    return result
-end
-
----@param value string
----@param color string
-local function paint(value, color)
-    return color .. value .. FONT_COLOR_CODE_CLOSE
 end
 
 ---@param label string
@@ -148,16 +124,14 @@ local function add_to_tooltip(label, value, wrap)
         boolean_to_wowboolean(wrap))
 end
 
--- TODO сконвертировать в проценты
----@param stat CompositeStatDTO|nil
-local function draw_armor(stat)
-    if stat == nil then
+---@param dto_or_nil ArmorDTO|nil
+local function draw_armor(dto_or_nil)
+    if dto_or_nil == nil then
         return
     end
 
-    ---@type CompositeStatDTO
-    local v = --[[---@type CompositeStatDTO]] stat
-    add_to_tooltip("Armor", tostring(v.effective), false)
+    local dto = --[[---@type ArmorDTO]] dto_or_nil
+    add_to_tooltip("Armor", format("%s (%s%% DR)", round(dto.amount, 0), round(dto.damage_reduction, 0)), false)
 end
 
 ---@type table<string, ResistId>
@@ -180,7 +154,8 @@ local RESIST_ID_TO_COLOR = {
 }
 
 -- TODO сконвертировать в проценты
----@param values table<ResistId, CompositeStatDTO|nil>
+-- TODO вывести шанс попадания
+---@param values table<ResistId, ResistanceDTO|nil>
 local function draw_resists(values)
     local sorted_labels = {}
     for label, _ in pairs(RESIST_LABEL_TO_ID) do
@@ -193,10 +168,10 @@ local function draw_resists(values)
         local resist_id = RESIST_LABEL_TO_ID[label]
         local resist_or_nil = values[resist_id]
         if resist_or_nil ~= nil then
-            local resist = --[[---@type CompositeStatDTO]] resist_or_nil
+            local resist = --[[---@type ResistanceDTO]] resist_or_nil
             local value_color = RESIST_ID_TO_COLOR[resist_id]
-            if resist.effective ~= 0 then
-                tinsert(resist_strings, paint(format("%s %d", label, resist.effective), value_color))
+            if resist.amount ~= 0 then
+                tinsert(resist_strings, paint(format("%s %d", label, resist.amount), value_color))
             end
         end
     end
@@ -206,20 +181,7 @@ local function draw_resists(values)
     add_to_tooltip("Resistances", strjoin(resist_strings, ", "), true)
 end
 
----@param n number
----@param decimal_places number
-local function round(n, decimal_places)
-    local m = 10 ^ decimal_places
-    n = n * m
-    if n >= 0 then
-        n = floor(n + 0.5)
-    else
-        n = ceil(n - 0.5)
-    end
-    return n / m
-end
-
----@param damage DamageDTO|nil
+---@param dto_or_nil DamageDTO|nil
 local function format_damage(dto_or_nil)
     if dto_or_nil == nil then
         return nil
@@ -232,8 +194,8 @@ end
 
 ---@param mh DamageDTO|nil
 ---@param oh DamageDTO|nil
----@param name string
 local function draw_melee_damage(mh, oh)
+    -- TODO вывести шанс попадания
     local mh_string = format_damage(mh)
     local oh_string = format_damage(oh)
     if mh_string ~= nil and oh_string ~= nil then
@@ -248,6 +210,7 @@ end
 
 ---@param stats AllStatsDTO
 local function draw_stats_on_tooltip(stats)
+    -- TODO вынести получение разных характеристик в разные файлы
     draw_melee_damage(stats.main_hand_damage, stats.offhand_damage)
     draw_armor(stats.armor)
     draw_resists(stats.resists)

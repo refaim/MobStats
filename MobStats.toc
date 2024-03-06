@@ -4,4 +4,6 @@
 ## Notes: Displays mob stats in the game tooltip
 ## Version: 1.0
 
+Environment.lua
+Utils.lua
 MobStats.lua
