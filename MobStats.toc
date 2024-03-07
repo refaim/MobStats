@@ -6,4 +6,15 @@
 
 Environment.lua
 Utils.lua
-MobStats.lua
+Infrastructure\GameAPI.lua
+Domain\Armor.lua
+Domain\Damage.lua
+Domain\Melee.lua
+Domain\Resistance.lua
+Application\ApplicationService.lua
+Presentation\Utils.lua
+Presentation\TooltipInterface.lua
+Presentation\Drawers\ArmorDrawer.lua
+Presentation\Drawers\MeleeDrawer.lua
+Presentation\Drawers\ResistancesDrawer.lua
+Presentation\TooltipController.lua
