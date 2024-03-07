@@ -30,6 +30,7 @@ local function get_resistance(mob, index)
         return nil
     end
 
+    -- TODO "Because you can have negative resistances in classic"
     return {
         amount = effective,
     }
@@ -69,6 +70,8 @@ local function get_armor(unit, player_level)
         return nil
     end
 
+    -- TODO what about negative armor?
+    -- TODO учесть armor penetration на вещах?
     local stat = --[[---@type ResistanceDTO]] stat_or_nil
     return {
         amount = stat.amount,
@@ -99,6 +102,8 @@ local function get_stats(unit)
         main_hand_damage = make_damage_dto(mh_speed, mh_min_damage, mh_max_damage),
         offhand_damage = make_damage_dto(oh_speed, oh_min_damage, oh_max_damage),
         armor = get_armor(unit, player_level),
+        -- TODO Holy Resistance isn't a stat in the game
+        -- TODO each mob/boss at higher level above you gains either +5 or +8 resistance to every spell school INCLUDING Holy
         resists = {
             holy = get_resistance(unit, 1),
             fire = get_resistance(unit, 2),
@@ -220,13 +225,12 @@ local PreviousOnShow
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("VARIABLES_LOADED")
 frame:SetScript("OnEvent", function ()
-    -- TODO test with pfQuest and fix if not displaying
     PreviousOnShow = GameTooltip:GetScript("OnShow")
     GameTooltip:SetScript("OnShow", function()
         local stats = get_stats("mouseover")
         if stats ~= nil then
             draw_stats_on_tooltip(--[[---@type AllStatsDTO]] stats)
-            GameTooltip:Show()
+            GameTooltip:Show() -- TODO why not PreviousOnShow?
         elseif PreviousOnShow ~= nil then
             (--[[---@type function]] PreviousOnShow)()
         end
