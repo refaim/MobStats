@@ -13,7 +13,13 @@ end
 
 ---@return number
 function GameAPI:GetPlayerLevel()
-    return UnitLevel("player")
+    return self:GetUnitLevel("player")
+end
+
+---@param unit UnitId
+---@return number
+function GameAPI:GetUnitLevel(unit)
+    return UnitLevel(unit)
 end
 
 ---@param unit UnitId
@@ -54,7 +60,7 @@ function GameAPI:GetResistances(unit)
     for id, index in pairs(RESISTANCE_ID_TO_INDEX) do
         local _, effective, _, _ = UnitResistance(unit, index)
         ---@type ResistanceInfrastructureDTO
-        local dto = { id = id, amount =  max(0, effective) }
+        local dto = { id = id, amount = effective }
         tinsert(result, dto)
     end
     return result

@@ -26,14 +26,17 @@ function ApplicationService:GetMobStats(unit)
         return nil
     end
 
+    local player_level = GameAPI:GetPlayerLevel()
+    local mob_level = GameAPI:GetUnitLevel(unit)
+
     local resistances = {}
     for _, dto in ipairs(GameAPI:GetResistances(unit)) do
-        tinsert(resistances, ResistanceVO:Construct(dto.id, dto.amount))
+        tinsert(resistances, ResistanceVO:Construct(dto.id, dto.amount, player_level, mob_level))
     end
 
     local melee_dto = GameAPI:GetMelee(unit)
     return {
-        armor = ArmorVO:Construct(GameAPI:GetArmor(unit), GameAPI:GetPlayerLevel()),
+        armor = ArmorVO:Construct(GameAPI:GetArmor(unit), player_level),
         melee = MeleeVO:Construct(make_damage_vo(melee_dto.main_hand), make_damage_vo(melee_dto.offhand)),
         resistances = resistances,
     }

@@ -35,9 +35,9 @@ function ResistancesDrawer:Draw(resistances, tooltip)
     for _, label in ipairs(sorted_labels) do
         local vo = label_to_vo[label]
         local display = ID_TO_DISPLAY[vo:GetId()]
-        local amount = vo:GetAmount()
-        if amount > 0 then
-            tinsert(value_strings, paint(format("%s %d", label, amount), display.color))
+        local value = round(vo:GetAverageResistanceInPercents(), 0)
+        if value > 0 then
+            tinsert(value_strings, paint(format("%s %d%%", label, value), display.color))
         end
     end
 

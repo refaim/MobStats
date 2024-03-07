@@ -6,14 +6,13 @@ ArmorDrawer = {}
 ---@param value ArmorVO
 ---@param tooltip TooltipInterface
 function ArmorDrawer:Draw(value, tooltip)
-    if value:GetAmount() == 0 then
-        return 0
+    local amount = round(value:GetAmount(), 0)
+    if amount == 0 then
+        return
     end
 
     tooltip:AddValue(
         "Armor",
-        format("%s (%s%% DR)",
-            round(value:GetAmount(), 0),
-            round(value:GetDamageReductionInPercents(), 0)),
+        format("%s (%s%% DR)", amount, round(value:GetDamageReductionInPercents(), 0)),
         false)
 end

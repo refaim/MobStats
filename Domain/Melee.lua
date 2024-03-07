@@ -13,8 +13,6 @@ function MeleeVO:Construct(main_hand_damage_or_nil, offhand_damage_or_nil)
         return nil
     end
 
-    -- TODO добавить шанс попадания
-
     local object = new(MeleeVO)
     object._main_hand_damage = --[[---@type DamageVO]] main_hand_damage_or_nil
     object._offhand_damage = offhand_damage_or_nil

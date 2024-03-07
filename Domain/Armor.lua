@@ -12,9 +12,11 @@ function ArmorVO:Construct(amount, player_level)
     assert(type(amount) == "number" and amount >= 0)
     assert(type(player_level) == "number" and player_level > 0)
 
+    local damage_reduction_in_percents = (amount / (amount + 400 + 85 * player_level)) * 100
+
     local object = new(ArmorVO)
     object._amount = amount
-    object._damage_reduction_in_percents = (amount / (amount + 400 + 85 * player_level)) * 100
+    object._damage_reduction_in_percents = damage_reduction_in_percents
     return object
 end
 
