@@ -2,7 +2,7 @@
 ## Title: MobStats
 ## Author: Refaim
 ## Notes: Displays mob stats in the game tooltip
-## Version: 1.0
+## Version: 1.1
 
 Environment.lua
 Utils.lua
@@ -10,6 +10,7 @@ Infrastructure\GameAPI.lua
 Domain\Armor.lua
 Domain\Damage.lua
 Domain\Melee.lua
+Domain\MobLevel.lua
 Domain\Resistance.lua
 Application\ApplicationService.lua
 Presentation\Utils.lua

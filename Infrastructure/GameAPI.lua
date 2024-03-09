@@ -13,13 +13,23 @@ end
 
 ---@return number
 function GameAPI:GetPlayerLevel()
-    return self:GetUnitLevel("player")
+    local level = self:GetUnitLevel("player")
+    assert(not level.is_skull)
+    return level.value
 end
 
+---@shape UnitLevelGameAPIDTO
+---@field is_skull boolean
+---@field value number
+
 ---@param unit UnitId
----@return number
+---@return UnitLevelGameAPIDTO
 function GameAPI:GetUnitLevel(unit)
-    return UnitLevel(unit)
+    local value = UnitLevel(unit)
+    return {
+        is_skull = value == -1,
+        value = value,
+    }
 end
 
 ---@param unit UnitId
