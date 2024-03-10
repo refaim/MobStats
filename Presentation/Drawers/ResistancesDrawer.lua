@@ -59,17 +59,20 @@ end
 ---@param groups_by_key table<string, ResistanceValuePresentationDTO[]>
 ---@return ResistanceValuePresentationDTO[]
 local function compact_dto_groups(groups_by_key)
+    local num_of_possible_resists = get_any_table_size(ID_TO_DISPLAY)
     local num_of_groups = get_any_table_size(groups_by_key)
 
     if num_of_groups == 1 then
         local group = groups_by_key[get_first_key(groups_by_key)]
-        local dto = group[1]
-        return {{
-            label = "All",
-            color = nil,
-            value = dto.value,
-            could_be_higher = dto.could_be_higher,
-        }}
+        if getn(group) == num_of_possible_resists then
+            local dto = group[1]
+            return {{
+                label = "All",
+                color = nil,
+                value = dto.value,
+                could_be_higher = dto.could_be_higher,
+            }}
+        end
     end
 
     ---@type ResistanceValuePresentationDTO[]
@@ -80,7 +83,7 @@ local function compact_dto_groups(groups_by_key)
         for _, group in pairs(groups_by_key) do
             if getn(group) == 1 then
                 group_with_single_dto = group
-            else
+            elseif getn(group) == num_of_possible_resists - 1 then
                 group_with_other_dtos = group
             end
         end
