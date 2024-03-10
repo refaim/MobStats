@@ -18,9 +18,6 @@ function ResistanceVO:Construct(id, amount, caster_level, target_level_vo)
     assert(type(amount) == "number")
     assert(type(caster_level) == "number" and caster_level > 0)
 
-    -- TODO add hit chance
-
-    -- TODO support negative resistances and spell penetration: https://github.com/vmangos/core/blob/5e142e104c8033cd0505cf8e060f37e263f503fe/src/game/Objects/SpellCaster.cpp#L611
     if amount < 0 then
         amount = 0
     end
@@ -31,7 +28,6 @@ function ResistanceVO:Construct(id, amount, caster_level, target_level_vo)
         amount = amount + (target_level - caster_level) * 8
     end
 
-    -- TODO recalculate as in vmangos: https://github.com/vmangos/core/blob/5e142e104c8033cd0505cf8e060f37e263f503fe/src/game/Objects/SpellCaster.cpp#L596
     -- https://wowwiki-archive.fandom.com/wiki/Formulas:Magical_resistance?oldid=295639
     local chance = amount / (max(20, caster_level) * 5) * 100
     if chance < 0 then

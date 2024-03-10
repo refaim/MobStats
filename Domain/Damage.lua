@@ -16,8 +16,6 @@ function DamageVO:Construct(attack_speed, min_damage, max_damage)
     assert(type(min_damage) == "number" and min_damage > 0)
     assert(type(max_damage) == "number" and max_damage > 0)
 
-    -- TODO add hit chance
-
     local object = new(DamageVO)
     object._attack_speed = attack_speed
     object._min_damage = min_damage
