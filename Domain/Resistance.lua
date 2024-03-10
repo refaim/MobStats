@@ -22,9 +22,14 @@ function ResistanceVO:Construct(id, amount, caster_level, target_level_vo)
         amount = 0
     end
 
+    local apply_level_based_resistance = true
+    if id == "holy" and Environment:IsPlayingOnTurtleWoW() then
+        apply_level_based_resistance = false -- https://forum.turtle-wow.org/viewtopic.php?p=27521
+    end
+
     -- https://github.com/vmangos/core/blob/5e142e104c8033cd0505cf8e060f37e263f503fe/src/game/Objects/SpellCaster.cpp#L629
     local target_level = target_level_vo:GetEstimatedValue()
-    if target_level > caster_level then
+    if apply_level_based_resistance and target_level > caster_level then
         amount = amount + (target_level - caster_level) * 8
     end
 

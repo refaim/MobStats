@@ -4,8 +4,9 @@
 ## Notes: Displays mob stats in the game tooltip
 ## Version: 1.1
 
-Environment.lua
+Boot.lua
 Utils.lua
+Environment.lua
 Infrastructure\GameAPI.lua
 Domain\Armor.lua
 Domain\Damage.lua

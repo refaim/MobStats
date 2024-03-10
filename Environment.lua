@@ -1,2 +1,9 @@
-local _G = getfenv(0)
-MobStats = setmetatable({ _G = _G }, { __index = _G })
+setfenv(1, MobStats)
+
+---@class Environment
+Environment = {}
+
+---@return boolean
+function Environment:IsPlayingOnTurtleWoW()
+    return TargetHPText ~= nil and TargetHPPercText ~= nil
+end
