@@ -2,7 +2,7 @@
 ## Title: MobStats
 ## Author: Refaim
 ## Notes: Displays mob stats in the game tooltip
-## Version: 1.1
+## Version: 1.2
 
 Boot.lua
 Utils.lua

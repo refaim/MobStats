@@ -1,4 +1,4 @@
-A World of Warcraft: Vanilla addon that displays mob stats in the game tooltip.
+Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly form in the game tooltip.
 
 ## Screenshots
 
@@ -6,6 +6,10 @@ A World of Warcraft: Vanilla addon that displays mob stats in the game tooltip.
 ![wendigo.png](wendigo.png)
 
 ## Version History
+
+### v1.2 (Mar 10, 2024)
+* Fix holy resistance calculation for Turtle WoW server
+* Fix resistance tooltip compression algorithm
 
 ### v1.1 (Mar 9, 2024)
 * Handle "skull"-level enemies properly
