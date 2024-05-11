@@ -29,7 +29,11 @@ function ApplicationService:GetMobStats(unit)
     local player_level = GameAPI:GetPlayerLevel()
 
     local mob_level_dto = GameAPI:GetUnitLevel(unit)
-    local mob_level_vo = MobLevelVO:Construct(player_level, mob_level_dto.value, mob_level_dto.is_skull)
+    local mob_level_vo = MobLevelVO:Construct(
+        player_level,
+        mob_level_dto.value,
+        mob_level_dto.is_skull,
+        mob_level_dto.is_world_boss)
 
     local resistances = {}
     for _, dto in ipairs(GameAPI:GetResistances(unit)) do

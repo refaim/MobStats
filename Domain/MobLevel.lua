@@ -5,27 +5,33 @@ setfenv(1, MobStats)
 ---@field _could_be_higher boolean
 MobLevelVO = {}
 
-local MAX_LEVEL = 63
+local MAX_REGULAR_LEVEL = 60
+local MAX_BOSS_LEVEL = 63
 
 ---@param player_level number
 ---@param raw_mob_level number
 ---@param is_skull_mob boolean
+---@param is_world_boss boolean
 ---@return MobLevelVO
-function MobLevelVO:Construct(player_level, raw_mob_level, is_skull_mob)
+function MobLevelVO:Construct(player_level, raw_mob_level, is_skull_mob, is_world_boss)
     assert(type(player_level) == "number" and player_level > 0)
     assert(type(raw_mob_level) == "number")
     assert(type(is_skull_mob) == "boolean")
+    assert(type(is_world_boss) == "boolean")
 
     local could_be_higher
     local estimated_level
-    if is_skull_mob then
-        estimated_level = min(player_level + 10, MAX_LEVEL)
-        could_be_higher = estimated_level < MAX_LEVEL
-        assert(raw_mob_level == -1)
-    else
+    if raw_mob_level > 0 then
         estimated_level = raw_mob_level
         could_be_higher = false
-        assert(raw_mob_level > 0)
+    else
+        if is_world_boss then
+            estimated_level = MAX_BOSS_LEVEL
+            could_be_higher = false
+        elseif is_skull_mob then
+            estimated_level = min(player_level + 10, MAX_REGULAR_LEVEL)
+            could_be_higher = estimated_level < MAX_REGULAR_LEVEL
+        end
     end
 
     local object = new(MobLevelVO)

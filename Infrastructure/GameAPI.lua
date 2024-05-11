@@ -18,17 +18,19 @@ function GameAPI:GetPlayerLevel()
     return level.value
 end
 
----@shape UnitLevelGameAPIDTO
----@field is_skull boolean
+---@shape UnitLevelInfrastructureDTO
 ---@field value number
+---@field is_skull boolean
+---@field is_world_boss boolean
 
 ---@param unit UnitId
----@return UnitLevelGameAPIDTO
+---@return UnitLevelInfrastructureDTO
 function GameAPI:GetUnitLevel(unit)
     local value = UnitLevel(unit)
     return {
-        is_skull = value == -1,
         value = value,
+        is_skull = value == -1,
+        is_world_boss = UnitClassification(unit) == "worldboss",
     }
 end
 
