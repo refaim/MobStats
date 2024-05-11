@@ -5,6 +5,8 @@ setfenv(1, MobStats)
 ---@field _could_be_higher boolean
 MobLevelVO = {}
 
+local MAX_LEVEL = 63
+
 ---@param player_level number
 ---@param raw_mob_level number
 ---@param is_skull_mob boolean
@@ -17,8 +19,8 @@ function MobLevelVO:Construct(player_level, raw_mob_level, is_skull_mob)
     local could_be_higher
     local estimated_level
     if is_skull_mob then
-        estimated_level = min(63, player_level + 10)
-        could_be_higher = true
+        estimated_level = min(player_level + 10, MAX_LEVEL)
+        could_be_higher = estimated_level < MAX_LEVEL
         assert(raw_mob_level == -1)
     else
         estimated_level = raw_mob_level
@@ -37,6 +39,6 @@ function MobLevelVO:GetEstimatedValue()
     return self._estimated_value
 end
 
-function MobLevelVO:CouldBeHigher()
+function MobLevelVO:CouldValueBeHigherThanEstimated()
     return self._could_be_higher
 end

@@ -42,7 +42,7 @@ function ResistanceVO:Construct(id, amount, caster_level, target_level_vo)
         chance = 75
     end
 
-    local could_be_higher = chance < 75 and target_level_vo:CouldBeHigher()
+    local could_be_higher = chance < 75 and target_level_vo:CouldValueBeHigherThanEstimated()
 
     local object = new(ResistanceVO)
     object._id = id
