@@ -24,14 +24,12 @@ function MobLevelVO:Construct(player_level, raw_mob_level, is_skull_mob, is_worl
     if raw_mob_level > 0 then
         estimated_level = raw_mob_level
         could_be_higher = false
-    else
-        if is_world_boss then
-            estimated_level = MAX_BOSS_LEVEL
-            could_be_higher = false
-        elseif is_skull_mob then
-            estimated_level = min(player_level + 10, MAX_REGULAR_LEVEL)
-            could_be_higher = estimated_level < MAX_REGULAR_LEVEL
-        end
+    elseif is_world_boss then
+        estimated_level = MAX_BOSS_LEVEL
+        could_be_higher = false
+    elseif is_skull_mob then
+        estimated_level = min(player_level + 10, MAX_REGULAR_LEVEL)
+        could_be_higher = estimated_level < MAX_REGULAR_LEVEL
     end
 
     local object = new(MobLevelVO)
