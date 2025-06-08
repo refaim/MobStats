@@ -5,5 +5,5 @@ Environment = {}
 
 ---@return boolean
 function Environment:IsPlayingOnTurtleWoW()
-    return TargetHPText ~= nil and TargetHPPercText ~= nil
+    return getglobal("LFT") ~= nil
 end
