@@ -7,6 +7,9 @@ Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly 
 
 ## Version History
 
+### v1.4 (June 6, 2025)
+* Fix average resistance calculation
+
 ### v1.3 (May 11, 2024)
 * Display zero armor as "None"
 * Treat "?? (Boss)" level mobs as 63 lvl mobs
