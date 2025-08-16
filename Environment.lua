@@ -5,5 +5,5 @@ Environment = {}
 
 ---@return boolean
 function Environment:IsPlayingOnTurtleWoW()
-    return getglobal("LFT") ~= nil
+    return getglobal("TURTLE_WOW_VERSION") ~= nil
 end

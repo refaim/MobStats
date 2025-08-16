@@ -7,7 +7,10 @@ Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly 
 
 ## Version History
 
-### v1.4 (June 6, 2025)
+### v1.5 (Aug 16, 2025)
+* Support Turtle WoW 1.18.0
+
+### v1.4 (Jun 6, 2025)
 * Fix average resistance calculation
 
 ### v1.3 (May 11, 2024)
