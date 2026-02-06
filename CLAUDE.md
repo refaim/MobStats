@@ -14,7 +14,7 @@ The codebase is organized into distinct layers:
 - **Infrastructure/**: Contains GameAPI.lua which wraps WoW's native API functions for unit information
 - **Domain/**: Value objects for game concepts (Armor, Damage, Melee, MobLevel, Resistance)
 - **Application/**: ApplicationService that orchestrates domain logic and data transformation
-- **Presentation/**: UI layer with TooltipController, TooltipInterface, and specialized Drawers for different stat types
+- **Presentation/**: UI layer with TooltipController, TooltipInterface, specialized Drawers, and Locale translations
 
 ## Key Components
 
@@ -22,6 +22,7 @@ The codebase is organized into distinct layers:
 - **GameAPI**: Infrastructure layer that wraps WoW's UnitResistance, UnitLevel, UnitDamage, etc. APIs
 - **Domain Value Objects**: Immutable objects with business logic (e.g., ArmorVO calculates damage reduction percentages)
 - **Tooltip System**: Hooks into GameTooltip's OnShow event to inject mob stats when mousing over enemies
+- **Locale System**: `Presentation/Locale/` contains per-language string tables. `enUS.lua` defines the base `L` table; other locales override individual keys. Supported: deDE, enUS, esES, frFR, koKR, ptBR, ruRU, zhCN, zhTW
 
 ## File Loading Order
 
@@ -47,38 +48,26 @@ To run all tests with coverage report:
 ./RunTests.bat
 ```
 
-This will:
-- Execute all unit and integration tests
-- Generate a code coverage report using LuaCov
-- Verify that coverage requirements are met
+This will execute all tests, generate a LuaCov coverage report, and verify 100% coverage. The same `Tests/RunTests.lua` entry point is used locally and in CI.
+
+Test files are auto-discovered: any `*Test.lua` file under `Tests/` is loaded automatically.
 
 ### Test Structure
-
-Tests are organized by type and mirror the source code structure:
 
 ```
 Tests/
 ├── Unit/                          # Isolated component tests
 │   ├── Domain/                    # Domain value object tests
-│   │   ├── ArmorTest.lua
-│   │   ├── DamageTest.lua
-│   │   ├── MeleeTest.lua
-│   │   ├── MobLevelTest.lua
-│   │   └── ResistanceTest.lua
 │   └── Presentation/
 │       └── Drawers/               # UI drawer tests
-│           ├── ArmorDrawerTest.lua
-│           ├── MeleeDrawerTest.lua
-│           └── ResistancesDrawerTest.lua
 ├── Integration/                   # Cross-layer tests
 │   └── Application/
-│       └── ApplicationServiceTest.lua
+├── Smoke/                         # Smoke tests
+│   └── Presentation/
+│       └── Locale/                # Locale completeness checks
 ├── Support/                       # Test utilities
-│   ├── Mocks/
-│   │   ├── MockEnvironment.lua
-│   │   └── MockTooltipInterface.lua
-│   └── CheckCoverage.lua
-└── RunTests.lua                   # Test entry point
+│   └── Mocks/
+└── RunTests.lua                   # Test entry point (discovery, runner, coverage)
 ```
 
 ### Test Conventions

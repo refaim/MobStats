@@ -1,6 +1,6 @@
 ![Tests](https://github.com/refaim/MobStats/workflows/Tests/badge.svg)
 
-Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly form in the game tooltip.
+Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly form in the game tooltip. Supports all game client languages.
 
 ## Screenshots
 
@@ -8,6 +8,10 @@ Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly 
 ![wendigo.png](wendigo.png)
 
 ## Version History
+
+### v1.7 (Feb 6, 2026)
+* Add localization support (deDE, enUS, esES, frFR, koKR, ptBR, ruRU, zhCN, zhTW)
+* Fix resistance lookup bug that would break with non-English locales
 
 ### v1.6 (Feb 5, 2026)
 * Improve resistance display when 5 of 6 resistances are identical

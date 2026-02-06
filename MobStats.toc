@@ -1,8 +1,16 @@
 ## Interface: 11200
 ## Title: MobStats
+## Version: 1.7
 ## Author: Refaim
 ## Notes: Displays mob stats in the game tooltip
-## Version: 1.6
+## Notes-deDE: Zeigt Mob-Statistiken im Spiel-Tooltip an
+## Notes-esES: Muestra estadísticas del enemigo en el tooltip del juego
+## Notes-frFR: Affiche les statistiques des mobs dans l'infobulle du jeu
+## Notes-koKR: 게임 툴팁에 몬스터 능력치를 표시합니다
+## Notes-ptBR: Exibe estatísticas do inimigo na dica do jogo
+## Notes-ruRU: Показывает характеристики мобов в игровом тултипе
+## Notes-zhCN: 在游戏提示框中显示怪物属性
+## Notes-zhTW: 在遊戲提示框中顯示怪物屬性
 
 Boot.lua
 Utils.lua
@@ -14,6 +22,15 @@ Domain\Melee.lua
 Domain\MobLevel.lua
 Domain\Resistance.lua
 Application\ApplicationService.lua
+Presentation\Locale\enUS.lua
+Presentation\Locale\deDE.lua
+Presentation\Locale\esES.lua
+Presentation\Locale\frFR.lua
+Presentation\Locale\koKR.lua
+Presentation\Locale\ptBR.lua
+Presentation\Locale\ruRU.lua
+Presentation\Locale\zhCN.lua
+Presentation\Locale\zhTW.lua
 Presentation\Utils.lua
 Presentation\TooltipInterface.lua
 Presentation\Drawers\ArmorDrawer.lua

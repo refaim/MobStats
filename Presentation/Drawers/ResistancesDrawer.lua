@@ -9,12 +9,12 @@ ResistancesDrawer = {}
 
 ---@type table<ResistanceId, ResistanceDisplayPresentationDTO>
 local ID_TO_DISPLAY = {}
-ID_TO_DISPLAY["arcane"] = { label = "Arcane", color = "|cff66d5ce" }
-ID_TO_DISPLAY["fire"] = { label = "Fire", color = "|cffdf6b6b" }
-ID_TO_DISPLAY["frost"] = { label = "Frost", color = "|cff3dbddd" }
-ID_TO_DISPLAY["holy"] = { label = "Holy", color = "|cffdada4b" }
-ID_TO_DISPLAY["nature"] = { label = "Nature", color = "|cff85d985" }
-ID_TO_DISPLAY["shadow"] = { label = "Shadow", color = "|cffcd81dc" }
+ID_TO_DISPLAY["arcane"] = { label = L.RESISTANCE_ARCANE, color = "|cff66d5ce" }
+ID_TO_DISPLAY["fire"] = { label = L.RESISTANCE_FIRE, color = "|cffdf6b6b" }
+ID_TO_DISPLAY["frost"] = { label = L.RESISTANCE_FROST, color = "|cff3dbddd" }
+ID_TO_DISPLAY["holy"] = { label = L.RESISTANCE_HOLY, color = "|cffdada4b" }
+ID_TO_DISPLAY["nature"] = { label = L.RESISTANCE_NATURE, color = "|cff85d985" }
+ID_TO_DISPLAY["shadow"] = { label = L.RESISTANCE_SHADOW, color = "|cffcd81dc" }
 
 ---@shape ResistanceValuePresentationDTO
 ---@field label string
@@ -67,7 +67,7 @@ local function compact_dto_groups(groups_by_key)
         if getn(group) == num_of_possible_resists then
             local dto = group[1]
             return {{
-                label = "All",
+                label = L.RESISTANCES_ALL,
                 color = nil,
                 value = dto.value,
                 could_be_higher = dto.could_be_higher,
@@ -75,30 +75,31 @@ local function compact_dto_groups(groups_by_key)
         elseif getn(group) == num_of_possible_resists - 1 then
             -- 5 same resistances, 1 missing (filtered as 0%)
             -- Find the missing resistance and show "MissingResist 0%, Other X%"
-            local present_ids = {}
+            local present_labels = {}
             for _, dto in ipairs(group) do
-                present_ids[dto.label] = true
+                present_labels[dto.label] = true
             end
 
-            local missing_label = nil
-            for _, display in pairs(ID_TO_DISPLAY) do
-                if not present_ids[display.label] then
-                    missing_label = display.label
+            local missing_id = nil
+            for id, display in pairs(ID_TO_DISPLAY) do
+                if not present_labels[display.label] then
+                    missing_id = id
                     break
                 end
             end
 
-            if missing_label then
+            if missing_id then
+                local missing_display = ID_TO_DISPLAY[missing_id]
                 local other_dto = group[1]
                 return {
                     {
-                        label = missing_label,
-                        color = ID_TO_DISPLAY[strlower(missing_label)].color,
+                        label = missing_display.label,
+                        color = missing_display.color,
                         value = 0,
                         could_be_higher = false,
                     },
                     {
-                        label = "Other",
+                        label = L.RESISTANCES_OTHER,
                         color = nil,
                         value = other_dto.value,
                         could_be_higher = other_dto.could_be_higher,
@@ -129,7 +130,7 @@ local function compact_dto_groups(groups_by_key)
         local other_dto = group_with_other_dtos[1]
         tinsert(dtos, group_with_single_dto[1])
         tinsert(dtos, {
-            label = "Other",
+            label = L.RESISTANCES_OTHER,
             color = nil,
             value = other_dto.value,
             could_be_higher = other_dto.could_be_higher,
@@ -180,8 +181,8 @@ function ResistancesDrawer:Draw(resistances, tooltip)
     end
 
     if getn(strings) == 0 then
-        tinsert(strings, "None")
+        tinsert(strings, L.RESISTANCES_NONE)
     end
 
-    tooltip:AddValue("Resistances", strjoin(strings, paint(", ", tooltip:GetValueColor())), true)
+    tooltip:AddValue(L.RESISTANCES, strjoin(strings, paint(", ", tooltip:GetValueColor())), true)
 end

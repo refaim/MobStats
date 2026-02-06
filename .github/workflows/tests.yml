@@ -24,12 +24,4 @@ jobs:
         sudo luarocks install luacov
 
     - name: Run tests
-      run: |
-        export LUA_PATH="Tests/?.lua;Tests/Unit/?.lua;Tests/Integration/?.lua;Tests/Support/?.lua;Tests/Support/Mocks/?.lua;;"
-        lua5.1 Tests/RunTests.lua
-
-    - name: Generate coverage report
-      run: luacov
-
-    - name: Check 100% coverage
-      run: lua5.1 Tests/Support/CheckCoverage.lua
+      run: lua5.1 Tests/RunTests.lua

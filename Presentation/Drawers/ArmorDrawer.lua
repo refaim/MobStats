@@ -15,10 +15,10 @@ function ArmorDrawer:Draw(value_or_nil, tooltip)
 
     local amount_string
     if integer_amount == 0 then
-        amount_string = "None"
+        amount_string = L.ARMOR_NONE
     else
-        amount_string = format("%d (%d%% DR)", integer_amount, round(value:GetDamageReductionInPercents(), 0))
+        amount_string = format(L.ARMOR_FORMAT, integer_amount, round(value:GetDamageReductionInPercents(), 0))
     end
 
-    tooltip:AddValue("Armor", amount_string, false)
+    tooltip:AddValue(L.ARMOR, amount_string, false)
 end

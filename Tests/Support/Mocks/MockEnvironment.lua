@@ -35,9 +35,15 @@ MobStats.Environment = {
     IsPlayingOnTurtleWoW = function() return false end
 }
 
+-- Mock GetLocale (default: enUS)
+MobStats.GetLocale = function() return "enUS" end
+
 -- Load real utilities from project
 dofile("Utils.lua")
 dofile("Presentation/Utils.lua")
+
+-- Load locale
+dofile("Presentation/Locale/enUS.lua")
 
 -- Load real domain objects
 dofile("Domain/Armor.lua")

@@ -10,7 +10,7 @@ local function format_damage(vo_or_nil)
     end
     local vo = --[[---@type DamageVO]] vo_or_nil
 
-    return format("%d-%d @ %.2f (%.1f dps)",
+    return format(L.MELEE_FORMAT,
         round(vo:GetMinDamage(), 0),
         round(vo:GetMaxDamage(), 0),
         round(vo:GetAttackSpeed(), 2),
@@ -28,9 +28,9 @@ function MeleeDrawer:Draw(value_or_nil, tooltip)
     local mh_string = format_damage(value:GetMainHandDamage())
     local oh_string = format_damage(value:GetOffhandDamage())
     if oh_string ~= nil then
-        tooltip:AddValue("Melee (MH)", --[[---@type string]] mh_string, false)
-        tooltip:AddValue("Melee (OH)", --[[---@type string]] oh_string, false)
+        tooltip:AddValue(L.MELEE_MH, --[[---@type string]] mh_string, false)
+        tooltip:AddValue(L.MELEE_OH, --[[---@type string]] oh_string, false)
     else
-        tooltip:AddValue("Melee", --[[---@type string]] mh_string, false)
+        tooltip:AddValue(L.MELEE, --[[---@type string]] mh_string, false)
     end
 end

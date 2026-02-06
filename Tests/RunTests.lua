@@ -1,5 +1,13 @@
 -- RunTests.lua
 -- Entry point for running all tests with LuaUnit and LuaCov
+-- Usage: lua5.1 Tests/RunTests.lua
+
+-- Ensure project root is in package.path
+package.path = '?.lua;' .. package.path
+
+-- Clean old coverage files
+os.remove("luacov.stats.out")
+os.remove("luacov.report.out")
 
 -- Start LuaCov for code coverage
 require('luacov')
@@ -7,24 +15,74 @@ require('luacov')
 -- Load LuaUnit
 local lu = require('luaunit')
 
--- Load unit tests - Utils
-require('Tests.Unit.UtilsTest')
+-- Auto-discover and load all *Test.lua files in Tests/
+local is_windows = package.config:sub(1, 1) == '\\'
 
--- Load unit tests - Domain
-require('Tests.Unit.Domain.ArmorTest')
-require('Tests.Unit.Domain.DamageTest')
-require('Tests.Unit.Domain.MeleeTest')
-require('Tests.Unit.Domain.MobLevelTest')
-require('Tests.Unit.Domain.ResistanceTest')
+local function discover_tests(dir)
+    local cmd
+    if is_windows then
+        cmd = 'dir /s /b "' .. dir .. '\\*Test.lua" 2>nul'
+    else
+        cmd = 'find "' .. dir .. '" -name "*Test.lua" 2>/dev/null'
+    end
+    local handle = io.popen(cmd)
+    local output = handle:read("*a")
+    handle:close()
 
--- Load unit tests - Presentation
-require('Tests.Unit.Presentation.UtilsTest')
-require('Tests.Unit.Presentation.Drawers.ArmorDrawerTest')
-require('Tests.Unit.Presentation.Drawers.MeleeDrawerTest')
-require('Tests.Unit.Presentation.Drawers.ResistancesDrawerTest')
+    for filepath in output:gmatch("[^\r\n]+") do
+        -- Convert path to relative module name:
+        -- .../Tests/Unit/Domain/ArmorTest.lua → Tests.Unit.Domain.ArmorTest
+        local relative = filepath:match("(Tests[/\\].+)$")
+        if relative then
+            local module = relative:gsub("[/\\]", "."):gsub("%.lua$", "")
+            require(module)
+        end
+    end
+end
 
--- Load integration tests
-require('Tests.Integration.Application.ApplicationServiceTest')
+discover_tests("Tests")
 
 -- Run all tests
-os.exit(lu.LuaUnit.run())
+local exit_code = lu.LuaUnit.run()
+if exit_code ~= 0 then
+    os.exit(exit_code)
+end
+
+-- Save coverage stats before generating report
+local luacov_runner = require("luacov.runner")
+luacov_runner.save_stats()
+
+-- Generate coverage report
+print("Generating coverage report...")
+local luacov_reporter = require("luacov.reporter")
+local cfg = luacov_runner.load_config()
+local reporter = luacov_reporter.DefaultReporter:new(cfg)
+reporter:run()
+reporter:close()
+
+-- Check 100% coverage
+print("Checking coverage...")
+local report = io.open("luacov.report.out", "r")
+if not report then
+    print("Error: luacov.report.out not found")
+    os.exit(1)
+end
+
+for line in report:lines() do
+    if line:match("^Total") then
+        local coverage = line:match("(%d+%.%d+)%%")
+        if coverage then
+            print(line)
+            if tonumber(coverage) < 100 then
+                report:close()
+                os.exit(1)
+            end
+            report:close()
+            os.exit(0)
+        end
+    end
+end
+
+report:close()
+print("Error: Could not find coverage summary")
+os.exit(1)
