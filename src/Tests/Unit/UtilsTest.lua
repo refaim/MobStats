@@ -22,8 +22,8 @@ end
 -- Test: Object inherits methods from class
 function TestUtils:test_new_object_inherits_methods()
     local TestClass = {
-        GetValue = function(self)
-            return self.data
+        GetValue = function(obj)
+            return obj.data
         end,
     }
 

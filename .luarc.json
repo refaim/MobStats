@@ -1,0 +1,19 @@
+{
+    "diagnostics.globals": [
+        "arg",
+        "arg1",
+        "arg2",
+        "arg3",
+        "arg4",
+        "arg5",
+        "arg6",
+        "arg7",
+        "arg8",
+        "arg9",
+        "event"
+    ],
+    "diagnostics.disable": ["deprecated", "unused"],
+    "runtime.version": "Lua 5.1",
+    "type.inferParamType": true,
+    "workspace.library": ["types/wow-api"]
+}

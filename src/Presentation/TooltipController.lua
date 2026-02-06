@@ -18,7 +18,7 @@ frame:SetScript("OnEvent", function()
     GameTooltip:SetScript("OnShow", function()
         local stats = ApplicationService:GetMobStats("mouseover")
         if stats ~= nil then
-            draw(--[[---@type MobStatsApplicationDTO]] stats)
+            draw(stats)
             GameTooltip:Show()
         end
         previous_script()

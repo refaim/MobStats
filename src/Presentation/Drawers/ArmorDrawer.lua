@@ -3,14 +3,12 @@ setfenv(1, MobStats)
 ---@class ArmorDrawer
 ArmorDrawer = {}
 
----@param value_or_nil ArmorVO|nil
+---@param value ArmorVO|nil
 ---@param tooltip TooltipInterface
-function ArmorDrawer:Draw(value_or_nil, tooltip)
-    if value_or_nil == nil then
+function ArmorDrawer:Draw(value, tooltip)
+    if value == nil then
         return
     end
-    local value = --[[---@type ArmorVO]]
-        value_or_nil
 
     local integer_amount = round(value:GetAmount(), 0)
 

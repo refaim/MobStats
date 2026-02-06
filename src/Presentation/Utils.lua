@@ -14,7 +14,7 @@ function round(n, decimal_places)
 end
 
 ---@param value boolean
----@return wowboolean
+---@return 1|nil
 function boolean_to_wowboolean(value)
     if value then
         return 1

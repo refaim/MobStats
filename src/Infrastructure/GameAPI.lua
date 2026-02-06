@@ -11,15 +11,15 @@ local function zero_to_nil(n)
     return n
 end
 
----@return number
+---@return integer
 function GameAPI:GetPlayerLevel()
     local level = self:GetUnitLevel("player")
     assert(not level.is_skull)
     return level.value
 end
 
----@shape UnitLevelInfrastructureDTO
----@field value number
+---@class UnitLevelInfrastructureDTO
+---@field value integer
 ---@field is_skull boolean
 ---@field is_world_boss boolean
 
@@ -47,7 +47,7 @@ function GameAPI:GetArmor(unit)
     return max(0, effective)
 end
 
----@shape ResistanceInfrastructureDTO
+---@class ResistanceInfrastructureDTO
 ---@field id ResistanceId
 ---@field amount number
 
@@ -76,12 +76,12 @@ function GameAPI:GetResistances(unit)
     return result
 end
 
----@shape DamageInfrastructureDTO
+---@class DamageInfrastructureDTO
 ---@field attack_speed number
 ---@field min_damage number
 ---@field max_damage number
 
----@shape MeleeInfrastructureDTO
+---@class MeleeInfrastructureDTO
 ---@field main_hand DamageInfrastructureDTO|nil
 ---@field offhand DamageInfrastructureDTO|nil
 
@@ -98,17 +98,10 @@ local function make_damage_dto(raw_attack_speed, raw_min_damage, raw_max_damage)
         return nil
     end
 
-    local attack_speed = --[[---@type number]]
-        raw_attack_speed
-    local min_damage = --[[---@type number]]
-        raw_min_damage
-    local max_damage = --[[---@type number]]
-        raw_max_damage
-
     return {
-        attack_speed = attack_speed,
-        min_damage = min_damage,
-        max_damage = max_damage,
+        attack_speed = raw_attack_speed,
+        min_damage = raw_min_damage,
+        max_damage = raw_max_damage,
     }
 end
 

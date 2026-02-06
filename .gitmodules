@@ -1,0 +1,3 @@
+[submodule "types/wow-api"]
+	path = types/wow-api
+	url = https://github.com/refaim/wow-api-type-definitions.git

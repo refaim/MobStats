@@ -62,13 +62,10 @@ reporter:close()
 
 -- Check 100% coverage
 print("Checking coverage...")
-local report = io.open("bin/luacov.report.out", "r")
-if not report then
-    print("Error: luacov.report.out not found")
-    os.exit(1)
-end
+local report = assert(io.open("bin/luacov.report.out", "r"), "Error: luacov.report.out not found")
 
 for line in report:lines() do
+    ---@cast line string
     if line:match("^Total") then
         local coverage = line:match("(%d+%.%d+)%%")
         if coverage then

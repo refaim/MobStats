@@ -8,7 +8,7 @@ function new(class)
 
     local object = {}
     setmetatable(object, { __index = class })
-    return  --[[---@type T]]object
+    return object
 end
 
 ---@param t table
@@ -28,11 +28,8 @@ end
 function get_first_key(t)
     assert(type(t) == "table")
 
-    local result
-    for k, _ in pairs(t) do
-        result = k
-        break
-    end
+    local result = next(t)
     assert(type(result) == "string")
+    ---@cast result string
     return result
 end

@@ -22,6 +22,40 @@ jobs:
     - name: Check formatting
       run: stylua --check src/
 
+  luacheck:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Lua 5.1 and LuaRocks
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lua5.1 luarocks
+
+    - name: Install luacheck
+      run: sudo luarocks install luacheck
+
+    - name: Run luacheck
+      run: luacheck src
+
+  emmylua-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Install emmylua_check
+      run: |
+        curl -sSL https://github.com/EmmyLuaLs/emmylua-analyzer-rust/releases/download/0.20.0/emmylua_check-linux-x64.tar.gz -o emmylua_check.tar.gz
+        tar xzf emmylua_check.tar.gz -C /usr/local/bin
+        chmod +x /usr/local/bin/emmylua_check
+
+    - name: Run emmylua_check
+      run: emmylua_check .
+
   test:
     runs-on: ubuntu-latest
 

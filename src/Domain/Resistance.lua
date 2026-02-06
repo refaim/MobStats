@@ -10,7 +10,7 @@ ResistanceVO = {}
 
 ---@param id ResistanceId
 ---@param amount number
----@param caster_level number
+---@param caster_level integer
 ---@param target_level_vo MobLevelVO
 ---@return ResistanceVO
 function ResistanceVO:Construct(id, amount, caster_level, target_level_vo)

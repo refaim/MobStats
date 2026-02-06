@@ -7,7 +7,6 @@ require("src.Tests.Support.Mocks.MockEnvironment")
 TestMobLevel = {}
 
 -- Test constants
-local PLAYER_LEVEL_1 = 1
 local PLAYER_LEVEL_10 = 10
 local PLAYER_LEVEL_30 = 30
 local PLAYER_LEVEL_50 = 50

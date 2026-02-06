@@ -3,7 +3,7 @@ setfenv(1, MobStats)
 ---@class ResistancesDrawer
 ResistancesDrawer = {}
 
----@shape ResistanceDisplayPresentationDTO
+---@class ResistanceDisplayPresentationDTO
 ---@field label string
 ---@field color string
 
@@ -16,7 +16,7 @@ ID_TO_DISPLAY["holy"] = { label = L.RESISTANCE_HOLY, color = "|cffdada4b" }
 ID_TO_DISPLAY["nature"] = { label = L.RESISTANCE_NATURE, color = "|cff85d985" }
 ID_TO_DISPLAY["shadow"] = { label = L.RESISTANCE_SHADOW, color = "|cffcd81dc" }
 
----@shape ResistanceValuePresentationDTO
+---@class ResistanceValuePresentationDTO
 ---@field label string
 ---@field color string|nil
 ---@field value number
@@ -66,6 +66,7 @@ local function compact_dto_groups(groups_by_key)
         local group = groups_by_key[get_first_key(groups_by_key)]
         if getn(group) == num_of_possible_resists then
             local dto = group[1]
+            assert(dto)
             return {
                 {
                     label = L.RESISTANCES_ALL,
@@ -82,6 +83,7 @@ local function compact_dto_groups(groups_by_key)
                 present_labels[dto.label] = true
             end
 
+            ---@type ResistanceId|nil
             local missing_id = nil
             for id, display in pairs(ID_TO_DISPLAY) do
                 if not present_labels[display.label] then
@@ -93,6 +95,7 @@ local function compact_dto_groups(groups_by_key)
             if missing_id then
                 local missing_display = ID_TO_DISPLAY[missing_id]
                 local other_dto = group[1]
+                assert(other_dto)
                 return {
                     {
                         label = missing_display.label,
@@ -130,6 +133,7 @@ local function compact_dto_groups(groups_by_key)
 
     if group_with_single_dto ~= nil and group_with_other_dtos ~= nil then
         local other_dto = group_with_other_dtos[1]
+        assert(other_dto)
         tinsert(dtos, group_with_single_dto[1])
         tinsert(dtos, {
             label = L.RESISTANCES_OTHER,

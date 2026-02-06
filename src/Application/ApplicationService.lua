@@ -3,21 +3,18 @@ setfenv(1, MobStats)
 ---@class ApplicationService
 ApplicationService = {}
 
----@shape MobStatsApplicationDTO
+---@class MobStatsApplicationDTO
 ---@field armor ArmorVO
 ---@field melee MeleeVO|nil
 ---@field resistances ResistanceVO[]
 
----@param dto_or_nil DamageInfrastructureDTO|nil
+---@param dto DamageInfrastructureDTO|nil
 ---@return DamageVO|nil
-local function make_damage_vo(dto_or_nil)
-    local vo
-    if dto_or_nil ~= nil then
-        local dto = --[[---@type DamageInfrastructureDTO]]
-            dto_or_nil
-        vo = DamageVO:Construct(dto.attack_speed, dto.min_damage, dto.max_damage)
+local function make_damage_vo(dto)
+    if dto == nil then
+        return nil
     end
-    return vo
+    return DamageVO:Construct(dto.attack_speed, dto.min_damage, dto.max_damage)
 end
 
 ---@param unit UnitId
