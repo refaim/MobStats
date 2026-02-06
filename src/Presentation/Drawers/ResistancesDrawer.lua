@@ -66,12 +66,14 @@ local function compact_dto_groups(groups_by_key)
         local group = groups_by_key[get_first_key(groups_by_key)]
         if getn(group) == num_of_possible_resists then
             local dto = group[1]
-            return {{
-                label = L.RESISTANCES_ALL,
-                color = nil,
-                value = dto.value,
-                could_be_higher = dto.could_be_higher,
-            }}
+            return {
+                {
+                    label = L.RESISTANCES_ALL,
+                    color = nil,
+                    value = dto.value,
+                    could_be_higher = dto.could_be_higher,
+                },
+            }
         elseif getn(group) == num_of_possible_resists - 1 then
             -- 5 same resistances, 1 missing (filtered as 0%)
             -- Find the missing resistance and show "MissingResist 0%, Other X%"
@@ -103,7 +105,7 @@ local function compact_dto_groups(groups_by_key)
                         color = nil,
                         value = other_dto.value,
                         could_be_higher = other_dto.could_be_higher,
-                    }
+                    },
                 }
             end
         end
@@ -172,9 +174,9 @@ function ResistancesDrawer:Draw(resistances, tooltip)
     local dtos = sort_dtos(compact_dto_groups(group_dtos(convert_value_objects_to_dtos(resistances))))
     local strings = {}
     for _, dto in ipairs(dtos) do
-        local plus = ''
+        local plus = ""
         if dto.could_be_higher then
-            plus = '+'
+            plus = "+"
         end
         local formatted_string = format("%s %d%%%s", dto.label, dto.value, plus)
         tinsert(strings, paint(formatted_string, dto.color or tooltip:GetValueColor()))

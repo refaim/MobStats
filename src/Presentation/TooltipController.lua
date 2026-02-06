@@ -13,7 +13,7 @@ local function do_nothing() end
 local previous_script
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("VARIABLES_LOADED")
-frame:SetScript("OnEvent", function ()
+frame:SetScript("OnEvent", function()
     previous_script = GameTooltip:GetScript("OnShow") or do_nothing
     GameTooltip:SetScript("OnShow", function()
         local stats = ApplicationService:GetMobStats("mouseover")

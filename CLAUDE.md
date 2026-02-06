@@ -40,16 +40,6 @@ The codebase uses EmmyLua-style type annotations extensively for development too
 
 The project includes a comprehensive test suite using LuaUnit.
 
-### Running Tests
-
-To run all tests with coverage report:
-
-```bash
-./RunTests.bat
-```
-
-This will execute all tests, generate a LuaCov coverage report, and verify 100% coverage. The same `src/Tests/RunTests.lua` entry point is used locally and in CI.
-
 Test files are auto-discovered: any `*Test.lua` file under `src/Tests/` is loaded automatically.
 
 ### Test Structure

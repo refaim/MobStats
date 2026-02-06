@@ -1,8 +1,8 @@
 -- DamageTest.lua
 -- Tests for DamageVO domain object
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 TestDamage = {}
 

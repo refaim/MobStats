@@ -37,9 +37,7 @@ end
 ---@param unit UnitId
 ---@return boolean
 function GameAPI:IsMob(unit)
-    return UnitCanAttack("player", unit) == 1
-       and UnitIsFriend("player", unit) == nil
-       and UnitIsPlayer(unit) == nil
+    return UnitCanAttack("player", unit) == 1 and UnitIsFriend("player", unit) == nil and UnitIsPlayer(unit) == nil
 end
 
 ---@param unit UnitId
@@ -100,9 +98,12 @@ local function make_damage_dto(raw_attack_speed, raw_min_damage, raw_max_damage)
         return nil
     end
 
-    local attack_speed = --[[---@type number]] raw_attack_speed
-    local min_damage = --[[---@type number]] raw_min_damage
-    local max_damage = --[[---@type number]] raw_max_damage
+    local attack_speed = --[[---@type number]]
+        raw_attack_speed
+    local min_damage = --[[---@type number]]
+        raw_min_damage
+    local max_damage = --[[---@type number]]
+        raw_max_damage
 
     return {
         attack_speed = attack_speed,

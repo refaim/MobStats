@@ -8,13 +8,16 @@ local function format_damage(vo_or_nil)
     if vo_or_nil == nil then
         return nil
     end
-    local vo = --[[---@type DamageVO]] vo_or_nil
+    local vo = --[[---@type DamageVO]]
+        vo_or_nil
 
-    return format(L.MELEE_FORMAT,
+    return format(
+        L.MELEE_FORMAT,
         round(vo:GetMinDamage(), 0),
         round(vo:GetMaxDamage(), 0),
         round(vo:GetAttackSpeed(), 2),
-        round(vo:GetDPS(), 1))
+        round(vo:GetDPS(), 1)
+    )
 end
 
 ---@param value_or_nil MeleeVO|nil
@@ -23,7 +26,8 @@ function MeleeDrawer:Draw(value_or_nil, tooltip)
     if value_or_nil == nil then
         return nil
     end
-    local value = --[[---@type MeleeVO]] value_or_nil
+    local value = --[[---@type MeleeVO]]
+        value_or_nil
 
     local mh_string = format_damage(value:GetMainHandDamage())
     local oh_string = format_damage(value:GetOffhandDamage())

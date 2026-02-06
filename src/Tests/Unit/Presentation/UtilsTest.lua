@@ -1,8 +1,8 @@
 -- Presentation/UtilsTest.lua
 -- Tests for Presentation/Utils.lua utility functions
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 -- Color constants for tests
 local RED_COLOR_CODE = "|cffff0000"
@@ -167,47 +167,47 @@ end
 
 -- Test: Single element returns element without glue
 function TestPresentationUtils:test_strjoin_single_element()
-    lu.assertEquals(MobStats.strjoin({"hello"}, ", "), "hello")
+    lu.assertEquals(MobStats.strjoin({ "hello" }, ", "), "hello")
 end
 
 -- Test: Two elements joined with glue
 function TestPresentationUtils:test_strjoin_two_elements()
-    lu.assertEquals(MobStats.strjoin({"hello", "world"}, ", "), "hello, world")
+    lu.assertEquals(MobStats.strjoin({ "hello", "world" }, ", "), "hello, world")
 end
 
 -- Test: Multiple elements joined with glue
 function TestPresentationUtils:test_strjoin_multiple_elements()
-    lu.assertEquals(MobStats.strjoin({"a", "b", "c", "d"}, "-"), "a-b-c-d")
+    lu.assertEquals(MobStats.strjoin({ "a", "b", "c", "d" }, "-"), "a-b-c-d")
 end
 
 -- Test: Empty glue concatenates directly
 function TestPresentationUtils:test_strjoin_empty_glue()
-    lu.assertEquals(MobStats.strjoin({"a", "b", "c"}, ""), "abc")
+    lu.assertEquals(MobStats.strjoin({ "a", "b", "c" }, ""), "abc")
 end
 
 -- Test: Multi-character glue
 function TestPresentationUtils:test_strjoin_multichar_glue()
-    lu.assertEquals(MobStats.strjoin({"one", "two", "three"}, " :: "), "one :: two :: three")
+    lu.assertEquals(MobStats.strjoin({ "one", "two", "three" }, " :: "), "one :: two :: three")
 end
 
 -- Test: Elements containing glue character
 function TestPresentationUtils:test_strjoin_elements_contain_glue()
-    lu.assertEquals(MobStats.strjoin({"a,b", "c,d"}, ","), "a,b,c,d")
+    lu.assertEquals(MobStats.strjoin({ "a,b", "c,d" }, ","), "a,b,c,d")
 end
 
 -- Test: Empty strings in array
 function TestPresentationUtils:test_strjoin_empty_strings_in_array()
-    lu.assertEquals(MobStats.strjoin({"", "b", ""}, "-"), "-b-")
+    lu.assertEquals(MobStats.strjoin({ "", "b", "" }, "-"), "-b-")
 end
 
 -- Test: Single empty string
 function TestPresentationUtils:test_strjoin_single_empty_string()
-    lu.assertEquals(MobStats.strjoin({""}, ", "), "")
+    lu.assertEquals(MobStats.strjoin({ "" }, ", "), "")
 end
 
 -- Test: Newline as glue
 function TestPresentationUtils:test_strjoin_newline_glue()
-    lu.assertEquals(MobStats.strjoin({"line1", "line2"}, "\n"), "line1\nline2")
+    lu.assertEquals(MobStats.strjoin({ "line1", "line2" }, "\n"), "line1\nline2")
 end
 
 -- ============================================================================
@@ -284,13 +284,13 @@ end
 -- Test: strjoin() with nil glue throws error
 function TestPresentationUtils:test_strjoin_nil_glue_throws()
     lu.assertError(function()
-        MobStats.strjoin({"a", "b"}, nil)
+        MobStats.strjoin({ "a", "b" }, nil)
     end)
 end
 
 -- Test: strjoin() with numbers in array (Lua auto-converts to strings)
 function TestPresentationUtils:test_strjoin_numbers_auto_converted()
-    lu.assertEquals(MobStats.strjoin({1, 2, 3}, "-"), "1-2-3")
+    lu.assertEquals(MobStats.strjoin({ 1, 2, 3 }, "-"), "1-2-3")
 end
 
 -- Test: paint() with nil value throws error

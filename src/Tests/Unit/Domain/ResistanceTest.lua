@@ -1,8 +1,8 @@
 -- ResistanceTest.lua
 -- Tests for ResistanceVO domain object
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 TestResistance = {}
 
@@ -19,18 +19,20 @@ local MOB_LEVEL_40 = 40
 local MOB_LEVEL_55 = 55
 local MOB_LEVEL_60 = 60
 local SKULL_MOB_PLAYER_LEVEL = 30
-local RESISTANCE_CAP_LEVEL_60 = 300  -- max(20, 60) * 5
-local RESISTANCE_CAP_LEVEL_10 = 100  -- max(20, 10) * 5
+local RESISTANCE_CAP_LEVEL_60 = 300 -- max(20, 60) * 5
+local RESISTANCE_CAP_LEVEL_10 = 100 -- max(20, 10) * 5
 local EXPECTED_RESISTANCE_AT_CAP = 68.75
 local EXPECTED_RESISTANCE_AT_TWO_THIRDS = 50
-local EXPECTED_LEVEL_BASED_RESISTANCE = 6  -- 3 levels * 8 resistance = 24, 24/300 * 0.75 * 100 = 6%
+local EXPECTED_LEVEL_BASED_RESISTANCE = 6 -- 3 levels * 8 resistance = 24, 24/300 * 0.75 * 100 = 6%
 
 local originalEnvironment
 
 function TestResistance:setUp()
     originalEnvironment = MobStats.Environment
     MobStats.Environment = {
-        IsPlayingOnTurtleWoW = function() return false end
+        IsPlayingOnTurtleWoW = function()
+            return false
+        end,
     }
 end
 
@@ -167,7 +169,9 @@ end
 -- Test: Holy resistance on Turtle WoW (no level-based resistance)
 function TestResistance:test_holy_resistance_turtle_wow_no_level_based()
     MobStats.Environment = {
-        IsPlayingOnTurtleWoW = function() return true end
+        IsPlayingOnTurtleWoW = function()
+            return true
+        end,
     }
 
     -- Mob level 63 (world boss), caster level 60
@@ -182,7 +186,9 @@ end
 -- Test: Non-holy resistance on Turtle WoW still gets level-based resistance
 function TestResistance:test_fire_resistance_turtle_wow_with_level_based()
     MobStats.Environment = {
-        IsPlayingOnTurtleWoW = function() return true end
+        IsPlayingOnTurtleWoW = function()
+            return true
+        end,
     }
 
     local mob_level = MobStats.MobLevelVO:Construct(CASTER_LEVEL_60, -1, true, true) -- World boss level 63
@@ -195,7 +201,9 @@ end
 -- Test: Holy resistance on non-Turtle WoW gets level-based resistance
 function TestResistance:test_holy_resistance_non_turtle_wow()
     MobStats.Environment = {
-        IsPlayingOnTurtleWoW = function() return false end
+        IsPlayingOnTurtleWoW = function()
+            return false
+        end,
     }
 
     local mob_level = MobStats.MobLevelVO:Construct(CASTER_LEVEL_60, -1, true, true) -- World boss level 63

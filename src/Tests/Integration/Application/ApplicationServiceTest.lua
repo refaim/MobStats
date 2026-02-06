@@ -1,8 +1,8 @@
 -- ApplicationServiceTest.lua
 -- Integration tests for ApplicationService
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 TestApplicationService = {}
 
@@ -33,12 +33,18 @@ local RESISTANCE_ZERO = 0
 -- Helper to create a mock GameAPI with default values
 local function createMockGameAPI()
     return {
-        IsMob = function() return true end,
-        GetPlayerLevel = function() return PLAYER_LEVEL_MAX end,
+        IsMob = function()
+            return true
+        end,
+        GetPlayerLevel = function()
+            return PLAYER_LEVEL_MAX
+        end,
         GetUnitLevel = function()
             return { value = MOB_LEVEL_REGULAR, is_skull = false, is_world_boss = false }
         end,
-        GetArmor = function() return ARMOR_DEFAULT end,
+        GetArmor = function()
+            return ARMOR_DEFAULT
+        end,
         GetResistances = function()
             return {
                 { id = "fire", amount = FIRE_RESISTANCE },
@@ -80,7 +86,9 @@ end
 
 -- Test: Returns nil for non-mob units
 function TestApplicationService:test_returns_nil_for_non_mob()
-    self.mockGameAPI.IsMob = function() return false end
+    self.mockGameAPI.IsMob = function()
+        return false
+    end
 
     local result = MobStats.ApplicationService:GetMobStats("target")
 
@@ -96,7 +104,9 @@ end
 
 -- Test: Armor amount is correctly passed through
 function TestApplicationService:test_armor_constructed_correctly()
-    self.mockGameAPI.GetArmor = function() return ARMOR_HIGH end
+    self.mockGameAPI.GetArmor = function()
+        return ARMOR_HIGH
+    end
 
     local result = MobStats.ApplicationService:GetMobStats("target")
 
@@ -217,7 +227,9 @@ end
 
 -- Test: Zero armor is passed through
 function TestApplicationService:test_zero_armor()
-    self.mockGameAPI.GetArmor = function() return ARMOR_ZERO end
+    self.mockGameAPI.GetArmor = function()
+        return ARMOR_ZERO
+    end
 
     local result = MobStats.ApplicationService:GetMobStats("target")
 

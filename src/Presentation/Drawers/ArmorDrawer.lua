@@ -9,7 +9,8 @@ function ArmorDrawer:Draw(value_or_nil, tooltip)
     if value_or_nil == nil then
         return
     end
-    local value = --[[---@type ArmorVO]] value_or_nil
+    local value = --[[---@type ArmorVO]]
+        value_or_nil
 
     local integer_amount = round(value:GetAmount(), 0)
 

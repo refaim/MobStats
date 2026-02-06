@@ -8,7 +8,7 @@ function new(class)
 
     local object = {}
     setmetatable(object, { __index = class })
-    return --[[---@type T]] object
+    return  --[[---@type T]]object
 end
 
 ---@param t table

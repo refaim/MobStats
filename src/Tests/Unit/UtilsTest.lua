@@ -1,8 +1,8 @@
 -- UtilsTest.lua
 -- Tests for Utils.lua utility functions
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 TestUtils = {}
 
@@ -22,7 +22,9 @@ end
 -- Test: Object inherits methods from class
 function TestUtils:test_new_object_inherits_methods()
     local TestClass = {
-        GetValue = function(self) return self.data end
+        GetValue = function(self)
+            return self.data
+        end,
     }
 
     local obj = MobStats.new(TestClass)

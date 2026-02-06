@@ -15,9 +15,10 @@ function TooltipInterface:AddValue(label, value, wrap)
     local label_color = NORMAL_FONT_COLOR_CODE
     local value_color = self:GetValueColor()
     GameTooltip:AddLine(
-        format('%s %s', paint(label .. ":", label_color), paint(value, value_color)),
+        format("%s %s", paint(label .. ":", label_color), paint(value, value_color)),
         nil,
         nil,
         nil,
-        boolean_to_wowboolean(wrap))
+        boolean_to_wowboolean(wrap)
+    )
 end

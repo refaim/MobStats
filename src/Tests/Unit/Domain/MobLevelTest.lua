@@ -1,8 +1,8 @@
 -- MobLevelTest.lua
 -- Tests for MobLevelVO domain object
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 TestMobLevel = {}
 

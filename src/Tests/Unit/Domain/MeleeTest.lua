@@ -1,8 +1,8 @@
 -- MeleeTest.lua
 -- Tests for MeleeVO domain object
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
 
 TestMelee = {}
 

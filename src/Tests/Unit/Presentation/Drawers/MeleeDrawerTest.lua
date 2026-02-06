@@ -1,9 +1,9 @@
 -- MeleeDrawerTest.lua
 -- Tests for MeleeDrawer
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
-local MockTooltipInterface = require('src.Tests.Support.Mocks.MockTooltipInterface')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
+local MockTooltipInterface = require("src.Tests.Support.Mocks.MockTooltipInterface")
 
 TestMeleeDrawer = {}
 

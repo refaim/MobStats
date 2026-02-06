@@ -1,9 +1,9 @@
 -- ResistancesDrawerTest.lua
 -- Tests for ResistancesDrawer
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
-local MockTooltipInterface = require('src.Tests.Support.Mocks.MockTooltipInterface')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
+local MockTooltipInterface = require("src.Tests.Support.Mocks.MockTooltipInterface")
 
 TestResistancesDrawer = {}
 
@@ -24,7 +24,7 @@ end
 -- Uses exact inverse formula from ResistanceVO:Construct
 local function create_resistance(id, percent)
     local caster_level = 60
-    local cap = caster_level * 5  -- 300
+    local cap = caster_level * 5 -- 300
 
     -- Inverse of the resistance formula:
     -- average_mitigation = 0.75 * ratio - (3/16) * max(0, ratio - 2/3)
@@ -172,7 +172,9 @@ end
 -- Test: Turtle WoW case - Holy 0%, others high due to level-based resistance
 function TestResistancesDrawer:test_turtle_wow_holy_no_level_resistance()
     -- Enable Turtle WoW mode
-    MobStats.Environment.IsPlayingOnTurtleWoW = function() return true end
+    MobStats.Environment.IsPlayingOnTurtleWoW = function()
+        return true
+    end
 
     -- High level mob (63), low level caster (60)
     -- Level difference = 3, so level-based adds 3*8=24 to all resists except Holy
@@ -203,12 +205,12 @@ end
 -- Test: 4 same + 2 different → all individual (no compactification)
 function TestResistancesDrawer:test_four_same_two_different_no_compact()
     local resistances = {
-        create_resistance("fire", LOW_RESISTANCE),      -- different #1
-        create_resistance("frost", LOW_MEDIUM_RESISTANCE),     -- different #2
-        create_resistance("arcane", TYPICAL_RESISTANCE),    -- same #1
-        create_resistance("holy", TYPICAL_RESISTANCE),      -- same #2
-        create_resistance("nature", TYPICAL_RESISTANCE),    -- same #3
-        create_resistance("shadow", TYPICAL_RESISTANCE),    -- same #4
+        create_resistance("fire", LOW_RESISTANCE), -- different #1
+        create_resistance("frost", LOW_MEDIUM_RESISTANCE), -- different #2
+        create_resistance("arcane", TYPICAL_RESISTANCE), -- same #1
+        create_resistance("holy", TYPICAL_RESISTANCE), -- same #2
+        create_resistance("nature", TYPICAL_RESISTANCE), -- same #3
+        create_resistance("shadow", TYPICAL_RESISTANCE), -- same #4
     }
 
     self.drawer:Draw(resistances, self.tooltip)
@@ -217,7 +219,10 @@ function TestResistancesDrawer:test_four_same_two_different_no_compact()
     local call = self.tooltip:GetCall(1)
     lu.assertEquals(call.label, "Resistances")
     -- All 6 resistances shown individually in alphabetical order
-    lu.assertEquals(call.value, "|cff66d5ceArcane 30%|r|cffffffff, |r|cffdf6b6bFire 10%|r|cffffffff, |r|cff3dbdddFrost 20%|r|cffffffff, |r|cffdada4bHoly 30%|r|cffffffff, |r|cff85d985Nature 30%|r|cffffffff, |r|cffcd81dcShadow 30%|r")
+    lu.assertEquals(
+        call.value,
+        "|cff66d5ceArcane 30%|r|cffffffff, |r|cffdf6b6bFire 10%|r|cffffffff, |r|cff3dbdddFrost 20%|r|cffffffff, |r|cffdada4bHoly 30%|r|cffffffff, |r|cff85d985Nature 30%|r|cffffffff, |r|cffcd81dcShadow 30%|r"
+    )
     lu.assertEquals(call.wrap, true)
 end
 
@@ -235,19 +240,22 @@ function TestResistancesDrawer:test_alphabetical_sorting()
     local call = self.tooltip:GetCall(1)
     lu.assertEquals(call.label, "Resistances")
     -- Sorted alphabetically: Arcane, Fire, Nature
-    lu.assertEquals(call.value, "|cff66d5ceArcane 40%|r|cffffffff, |r|cffdf6b6bFire 20%|r|cffffffff, |r|cff85d985Nature 30%|r")
+    lu.assertEquals(
+        call.value,
+        "|cff66d5ceArcane 40%|r|cffffffff, |r|cffdf6b6bFire 20%|r|cffffffff, |r|cff85d985Nature 30%|r"
+    )
     lu.assertEquals(call.wrap, true)
 end
 
 -- Test: Each resistance has correct color
 function TestResistancesDrawer:test_resistance_colors()
     local test_cases = {
-        {id = "arcane", expected = "|cff66d5ceArcane 50%|r"},
-        {id = "fire", expected = "|cffdf6b6bFire 50%|r"},
-        {id = "frost", expected = "|cff3dbdddFrost 50%|r"},
-        {id = "holy", expected = "|cffdada4bHoly 50%|r"},
-        {id = "nature", expected = "|cff85d985Nature 50%|r"},
-        {id = "shadow", expected = "|cffcd81dcShadow 50%|r"},
+        { id = "arcane", expected = "|cff66d5ceArcane 50%|r" },
+        { id = "fire", expected = "|cffdf6b6bFire 50%|r" },
+        { id = "frost", expected = "|cff3dbdddFrost 50%|r" },
+        { id = "holy", expected = "|cffdada4bHoly 50%|r" },
+        { id = "nature", expected = "|cff85d985Nature 50%|r" },
+        { id = "shadow", expected = "|cffcd81dcShadow 50%|r" },
     }
 
     for _, tc in ipairs(test_cases) do
@@ -315,11 +323,11 @@ function TestResistancesDrawer:test_resistance_rounding()
     -- Note: Uses create_resistance() which performs percent→ratio→amount→percent conversion
     -- Floating-point precision should be sufficient for these test cases
     local test_cases = {
-        {percent = 49.4, expected = 49},
-        {percent = 49.5, expected = 50},
-        {percent = 49.6, expected = 50},
-        {percent = 50.4, expected = 50},
-        {percent = 50.5, expected = 51},
+        { percent = 49.4, expected = 49 },
+        { percent = 49.5, expected = 50 },
+        { percent = 49.6, expected = 50 },
+        { percent = 50.4, expected = 50 },
+        { percent = 50.5, expected = 51 },
     }
 
     for _, tc in ipairs(test_cases) do

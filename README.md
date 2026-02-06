@@ -1,4 +1,4 @@
-![Tests](https://github.com/refaim/MobStats/workflows/Tests/badge.svg)
+![CI](https://github.com/refaim/MobStats/workflows/CI/badge.svg)
 
 Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly form in the game tooltip. Supports all game client languages.
 

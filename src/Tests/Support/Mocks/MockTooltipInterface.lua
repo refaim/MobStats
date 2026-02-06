@@ -6,7 +6,7 @@ MockTooltipInterface.__index = MockTooltipInterface
 
 function MockTooltipInterface:new()
     local instance = {
-        calls = {}
+        calls = {},
     }
     setmetatable(instance, MockTooltipInterface)
     return instance
@@ -14,7 +14,7 @@ end
 
 -- Mock GetValueColor to return a fixed color
 function MockTooltipInterface:GetValueColor()
-    return "|cffffffff"  -- White
+    return "|cffffffff" -- White
 end
 
 -- Mock AddValue to record the call
@@ -22,7 +22,7 @@ function MockTooltipInterface:AddValue(label, value, wrap)
     table.insert(self.calls, {
         label = label,
         value = value,
-        wrap = wrap
+        wrap = wrap,
     })
 end
 

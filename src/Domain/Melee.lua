@@ -14,7 +14,7 @@ function MeleeVO:Construct(main_hand_damage_or_nil, offhand_damage_or_nil)
     end
 
     local object = new(MeleeVO)
-    object._main_hand_damage = --[[---@type DamageVO]] main_hand_damage_or_nil
+    object._main_hand_damage = main_hand_damage_or_nil
     object._offhand_damage = offhand_damage_or_nil
     return object
 end

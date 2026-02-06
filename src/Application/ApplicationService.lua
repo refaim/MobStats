@@ -13,7 +13,8 @@ ApplicationService = {}
 local function make_damage_vo(dto_or_nil)
     local vo
     if dto_or_nil ~= nil then
-        local dto = --[[---@type DamageInfrastructureDTO]] dto_or_nil
+        local dto = --[[---@type DamageInfrastructureDTO]]
+            dto_or_nil
         vo = DamageVO:Construct(dto.attack_speed, dto.min_damage, dto.max_damage)
     end
     return vo
@@ -29,11 +30,8 @@ function ApplicationService:GetMobStats(unit)
     local player_level = GameAPI:GetPlayerLevel()
 
     local mob_level_dto = GameAPI:GetUnitLevel(unit)
-    local mob_level_vo = MobLevelVO:Construct(
-        player_level,
-        mob_level_dto.value,
-        mob_level_dto.is_skull,
-        mob_level_dto.is_world_boss)
+    local mob_level_vo =
+        MobLevelVO:Construct(player_level, mob_level_dto.value, mob_level_dto.is_skull, mob_level_dto.is_world_boss)
 
     local resistances = {}
     for _, dto in ipairs(GameAPI:GetResistances(unit)) do

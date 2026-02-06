@@ -3,20 +3,20 @@
 -- Usage: lua5.1 src/Tests/RunTests.lua
 
 -- Ensure project root is in package.path
-package.path = '?.lua;' .. package.path
+package.path = "?.lua;" .. package.path
 
 -- Clean old coverage files
 os.remove("bin/luacov.stats.out")
 os.remove("bin/luacov.report.out")
 
 -- Start LuaCov for code coverage
-require('luacov')
+require("luacov")
 
 -- Load LuaUnit
-local lu = require('luaunit')
+local lu = require("luaunit")
 
 -- Auto-discover and load all *Test.lua files in src/Tests/
-local is_windows = package.config:sub(1, 1) == '\\'
+local is_windows = package.config:sub(1, 1) == "\\"
 
 local function discover_tests(dir)
     local cmd

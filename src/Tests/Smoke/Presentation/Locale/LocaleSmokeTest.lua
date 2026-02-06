@@ -1,9 +1,9 @@
 -- LocaleSmokeTest.lua
 -- Smoke tests that verify each locale produces correct localized output in tooltips
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
-local MockTooltipInterface = require('src.Tests.Support.Mocks.MockTooltipInterface')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
+local MockTooltipInterface = require("src.Tests.Support.Mocks.MockTooltipInterface")
 
 TestLocaleSmoke = {}
 
@@ -11,7 +11,9 @@ TestLocaleSmoke = {}
 --- This is necessary because ID_TO_DISPLAY in ResistancesDrawer captures L values at load time.
 local function setup_locale(locale_code)
     dofile("src/Presentation/Locale/enUS.lua")
-    MobStats.GetLocale = function() return locale_code end
+    MobStats.GetLocale = function()
+        return locale_code
+    end
     if locale_code ~= "enUS" then
         dofile("src/Presentation/Locale/" .. locale_code .. ".lua")
     end
@@ -48,15 +50,21 @@ end
 
 --- Expected labels per locale: { armor_label, armor_none, melee_label, resistances_label, fire_name }
 local EXPECTED = {
-    enUS = { "Armor",           "None",     "Melee",              "Resistances",     "Fire" },
-    deDE = { "Rüstung",         "Keine",    "Nahkampf",           "Widerstände",     "Feuer" },
-    esES = { "Armadura",        "Nada",     "Cuerpo a cuerpo",    "Resistencias",    "Fuego" },
-    frFR = { "Armure",          "Aucune",   "Mêlée",             "Résistances",     "Feu" },
-    koKR = { "방어도",           "없음",      "근접",               "저항",             "화염" },
-    ptBR = { "Armadura",        "Nenhuma",  "Corpo a corpo",      "Resistências",    "Fogo" },
-    ruRU = { "Броня",           "Нет",      "Ближний бой",        "Сопротивления",   "Огонь" },
-    zhCN = { "护甲",            "无",        "近战",               "抗性",             "火焰" },
-    zhTW = { "護甲",            "無",        "近戰",               "抗性",             "火焰" },
+    enUS = { "Armor", "None", "Melee", "Resistances", "Fire" },
+    deDE = { "Rüstung", "Keine", "Nahkampf", "Widerstände", "Feuer" },
+    esES = { "Armadura", "Nada", "Cuerpo a cuerpo", "Resistencias", "Fuego" },
+    frFR = { "Armure", "Aucune", "Mêlée", "Résistances", "Feu" },
+    koKR = { "방어도", "없음", "근접", "저항", "화염" },
+    ptBR = { "Armadura", "Nenhuma", "Corpo a corpo", "Resistências", "Fogo" },
+    ruRU = {
+        "Броня",
+        "Нет",
+        "Ближний бой",
+        "Сопротивления",
+        "Огонь",
+    },
+    zhCN = { "护甲", "无", "近战", "抗性", "火焰" },
+    zhTW = { "護甲", "無", "近戰", "抗性", "火焰" },
 }
 
 local function run_locale_test(locale_code)
@@ -90,14 +98,32 @@ local function run_locale_test(locale_code)
     lu.assertStrContains(res_call.value, expected[5], locale_code .. ": Fire resistance name")
 end
 
-function TestLocaleSmoke:test_enUS() run_locale_test("enUS") end
-function TestLocaleSmoke:test_deDE() run_locale_test("deDE") end
-function TestLocaleSmoke:test_esES() run_locale_test("esES") end
-function TestLocaleSmoke:test_frFR() run_locale_test("frFR") end
-function TestLocaleSmoke:test_koKR() run_locale_test("koKR") end
-function TestLocaleSmoke:test_ptBR() run_locale_test("ptBR") end
-function TestLocaleSmoke:test_ruRU() run_locale_test("ruRU") end
-function TestLocaleSmoke:test_zhCN() run_locale_test("zhCN") end
-function TestLocaleSmoke:test_zhTW() run_locale_test("zhTW") end
+function TestLocaleSmoke:test_enUS()
+    run_locale_test("enUS")
+end
+function TestLocaleSmoke:test_deDE()
+    run_locale_test("deDE")
+end
+function TestLocaleSmoke:test_esES()
+    run_locale_test("esES")
+end
+function TestLocaleSmoke:test_frFR()
+    run_locale_test("frFR")
+end
+function TestLocaleSmoke:test_koKR()
+    run_locale_test("koKR")
+end
+function TestLocaleSmoke:test_ptBR()
+    run_locale_test("ptBR")
+end
+function TestLocaleSmoke:test_ruRU()
+    run_locale_test("ruRU")
+end
+function TestLocaleSmoke:test_zhCN()
+    run_locale_test("zhCN")
+end
+function TestLocaleSmoke:test_zhTW()
+    run_locale_test("zhTW")
+end
 
 return TestLocaleSmoke

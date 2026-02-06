@@ -37,11 +37,9 @@ function ResistanceVO:Construct(id, amount, caster_level, target_level_vo)
     local cap = max(20, caster_level) * 5
     local ratio = amount / cap
     -- https://royalgiraffe.github.io/resist-guide
-    local average_mitigation = 0.75 * ratio - (3/16) * max(0, ratio - 2/3)
+    local average_mitigation = 0.75 * ratio - (3 / 16) * max(0, ratio - 2 / 3)
     local chance = average_mitigation * 100
-    local could_be_higher = chance < 68.75
-        and amount < cap
-        and target_level_vo:CouldValueBeHigherThanEstimated()
+    local could_be_higher = chance < 68.75 and amount < cap and target_level_vo:CouldValueBeHigherThanEstimated()
 
     local object = new(ResistanceVO)
     object._id = id

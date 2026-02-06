@@ -1,9 +1,9 @@
 -- ArmorDrawerTest.lua
 -- Tests for ArmorDrawer
 
-local lu = require('luaunit')
-require('src.Tests.Support.Mocks.MockEnvironment')
-local MockTooltipInterface = require('src.Tests.Support.Mocks.MockTooltipInterface')
+local lu = require("luaunit")
+require("src.Tests.Support.Mocks.MockEnvironment")
+local MockTooltipInterface = require("src.Tests.Support.Mocks.MockTooltipInterface")
 
 TestArmorDrawer = {}
 
