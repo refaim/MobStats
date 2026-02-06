@@ -2,7 +2,7 @@
 -- Tests for Presentation/Utils.lua utility functions
 
 local lu = require('luaunit')
-require('Tests.Support.Mocks.MockEnvironment')
+require('src.Tests.Support.Mocks.MockEnvironment')
 
 -- Color constants for tests
 local RED_COLOR_CODE = "|cffff0000"

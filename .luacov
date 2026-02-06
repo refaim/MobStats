@@ -2,26 +2,22 @@
 -- Configuration for LuaCov code coverage
 
 return {
-    statsfile = "luacov.stats.out",
-    reportfile = "luacov.report.out",
+    statsfile = "bin/luacov.stats.out",
+    reportfile = "bin/luacov.report.out",
 
     -- Include only the modules we want to measure
     include = {
-        "Utils%.lua",
-        "Presentation/Utils%.lua",
-        "Domain/",
-        "Application/",
-        "Presentation/Drawers/",
+        "src/",
     },
 
     -- Exclude test files and other parts of the project
     exclude = {
-        "Tests/",
-        "Tests/Unit/",
-        "Tests/Integration/",
-        "Tests/Support/",
-        "Boot%.lua",
-        "Environment%.lua",
-        "Infrastructure/",
+        "src/Infrastructure/",
+        "src/Presentation/Locale/",
+        "src/Presentation/TooltipController%.lua",
+        "src/Presentation/TooltipInterface%.lua",
+        "src/Tests/",
+        "src/Boot%.lua",
+        "src/Environment%.lua",
     },
 }

@@ -2,7 +2,7 @@
 -- Tests for Utils.lua utility functions
 
 local lu = require('luaunit')
-require('Tests.Support.Mocks.MockEnvironment')
+require('src.Tests.Support.Mocks.MockEnvironment')
 
 TestUtils = {}
 

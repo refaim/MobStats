@@ -2,22 +2,22 @@
 -- Smoke tests that verify each locale produces correct localized output in tooltips
 
 local lu = require('luaunit')
-require('Tests.Support.Mocks.MockEnvironment')
-local MockTooltipInterface = require('Tests.Support.Mocks.MockTooltipInterface')
+require('src.Tests.Support.Mocks.MockEnvironment')
+local MockTooltipInterface = require('src.Tests.Support.Mocks.MockTooltipInterface')
 
 TestLocaleSmoke = {}
 
 --- Reloads locale files and drawers for the given locale code.
 --- This is necessary because ID_TO_DISPLAY in ResistancesDrawer captures L values at load time.
 local function setup_locale(locale_code)
-    dofile("Presentation/Locale/enUS.lua")
+    dofile("src/Presentation/Locale/enUS.lua")
     MobStats.GetLocale = function() return locale_code end
     if locale_code ~= "enUS" then
-        dofile("Presentation/Locale/" .. locale_code .. ".lua")
+        dofile("src/Presentation/Locale/" .. locale_code .. ".lua")
     end
-    dofile("Presentation/Drawers/ArmorDrawer.lua")
-    dofile("Presentation/Drawers/MeleeDrawer.lua")
-    dofile("Presentation/Drawers/ResistancesDrawer.lua")
+    dofile("src/Presentation/Drawers/ArmorDrawer.lua")
+    dofile("src/Presentation/Drawers/MeleeDrawer.lua")
+    dofile("src/Presentation/Drawers/ResistancesDrawer.lua")
 end
 
 function TestLocaleSmoke:tearDown()

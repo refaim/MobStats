@@ -10,11 +10,11 @@ MobStats is a Vanilla WoW 1.12.1 and Turtle WoW addon that displays mob statisti
 
 The codebase is organized into distinct layers:
 
-- **Boot.lua**: Entry point that sets up the global MobStats namespace with environment isolation
-- **Infrastructure/**: Contains GameAPI.lua which wraps WoW's native API functions for unit information
-- **Domain/**: Value objects for game concepts (Armor, Damage, Melee, MobLevel, Resistance)
-- **Application/**: ApplicationService that orchestrates domain logic and data transformation
-- **Presentation/**: UI layer with TooltipController, TooltipInterface, specialized Drawers, and Locale translations
+- **src/Boot.lua**: Entry point that sets up the global MobStats namespace with environment isolation
+- **src/Infrastructure/**: Contains GameAPI.lua which wraps WoW's native API functions for unit information
+- **src/Domain/**: Value objects for game concepts (Armor, Damage, Melee, MobLevel, Resistance)
+- **src/Application/**: ApplicationService that orchestrates domain logic and data transformation
+- **src/Presentation/**: UI layer with TooltipController, TooltipInterface, specialized Drawers, and Locale translations
 
 ## Key Components
 
@@ -22,7 +22,7 @@ The codebase is organized into distinct layers:
 - **GameAPI**: Infrastructure layer that wraps WoW's UnitResistance, UnitLevel, UnitDamage, etc. APIs
 - **Domain Value Objects**: Immutable objects with business logic (e.g., ArmorVO calculates damage reduction percentages)
 - **Tooltip System**: Hooks into GameTooltip's OnShow event to inject mob stats when mousing over enemies
-- **Locale System**: `Presentation/Locale/` contains per-language string tables. `enUS.lua` defines the base `L` table; other locales override individual keys. Supported: deDE, enUS, esES, frFR, koKR, ptBR, ruRU, zhCN, zhTW
+- **Locale System**: `src/Presentation/Locale/` contains per-language string tables. `enUS.lua` defines the base `L` table; other locales override individual keys. Supported: deDE, enUS, esES, frFR, koKR, ptBR, ruRU, zhCN, zhTW
 
 ## File Loading Order
 
@@ -48,14 +48,14 @@ To run all tests with coverage report:
 ./RunTests.bat
 ```
 
-This will execute all tests, generate a LuaCov coverage report, and verify 100% coverage. The same `Tests/RunTests.lua` entry point is used locally and in CI.
+This will execute all tests, generate a LuaCov coverage report, and verify 100% coverage. The same `src/Tests/RunTests.lua` entry point is used locally and in CI.
 
-Test files are auto-discovered: any `*Test.lua` file under `Tests/` is loaded automatically.
+Test files are auto-discovered: any `*Test.lua` file under `src/Tests/` is loaded automatically.
 
 ### Test Structure
 
 ```
-Tests/
+src/Tests/
 ├── Unit/                          # Isolated component tests
 │   ├── Domain/                    # Domain value object tests
 │   └── Presentation/

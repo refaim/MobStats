@@ -24,4 +24,4 @@ jobs:
         sudo luarocks install luacov
 
     - name: Run tests
-      run: lua5.1 Tests/RunTests.lua
+      run: lua5.1 src/Tests/RunTests.lua

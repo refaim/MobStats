@@ -4,8 +4,8 @@ Vanilla WoW 1.12.1 and Turtle WoW addon. Displays mob stats in a human-friendly 
 
 ## Screenshots
 
-![boar.png](boar.png)
-![wendigo.png](wendigo.png)
+![boar.png](screenshots/boar.png)
+![wendigo.png](screenshots/wendigo.png)
 
 ## Version History
 

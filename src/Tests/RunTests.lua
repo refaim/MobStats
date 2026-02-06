@@ -1,13 +1,13 @@
 -- RunTests.lua
 -- Entry point for running all tests with LuaUnit and LuaCov
--- Usage: lua5.1 Tests/RunTests.lua
+-- Usage: lua5.1 src/Tests/RunTests.lua
 
 -- Ensure project root is in package.path
 package.path = '?.lua;' .. package.path
 
 -- Clean old coverage files
-os.remove("luacov.stats.out")
-os.remove("luacov.report.out")
+os.remove("bin/luacov.stats.out")
+os.remove("bin/luacov.report.out")
 
 -- Start LuaCov for code coverage
 require('luacov')
@@ -15,7 +15,7 @@ require('luacov')
 -- Load LuaUnit
 local lu = require('luaunit')
 
--- Auto-discover and load all *Test.lua files in Tests/
+-- Auto-discover and load all *Test.lua files in src/Tests/
 local is_windows = package.config:sub(1, 1) == '\\'
 
 local function discover_tests(dir)
@@ -31,8 +31,8 @@ local function discover_tests(dir)
 
     for filepath in output:gmatch("[^\r\n]+") do
         -- Convert path to relative module name:
-        -- .../Tests/Unit/Domain/ArmorTest.lua → Tests.Unit.Domain.ArmorTest
-        local relative = filepath:match("(Tests[/\\].+)$")
+        -- .../src/Tests/Unit/Domain/ArmorTest.lua → src.Tests.Unit.Domain.ArmorTest
+        local relative = filepath:match("(src[/\\]Tests[/\\].+)$")
         if relative then
             local module = relative:gsub("[/\\]", "."):gsub("%.lua$", "")
             require(module)
@@ -40,7 +40,7 @@ local function discover_tests(dir)
     end
 end
 
-discover_tests("Tests")
+discover_tests("src/Tests")
 
 -- Run all tests
 local exit_code = lu.LuaUnit.run()
@@ -62,7 +62,7 @@ reporter:close()
 
 -- Check 100% coverage
 print("Checking coverage...")
-local report = io.open("luacov.report.out", "r")
+local report = io.open("bin/luacov.report.out", "r")
 if not report then
     print("Error: luacov.report.out not found")
     os.exit(1)

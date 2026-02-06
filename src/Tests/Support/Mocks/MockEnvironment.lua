@@ -39,26 +39,26 @@ MobStats.Environment = {
 MobStats.GetLocale = function() return "enUS" end
 
 -- Load real utilities from project
-dofile("Utils.lua")
-dofile("Presentation/Utils.lua")
+dofile("src/Utils.lua")
+dofile("src/Presentation/Utils.lua")
 
 -- Load locale
-dofile("Presentation/Locale/enUS.lua")
+dofile("src/Presentation/Locale/enUS.lua")
 
 -- Load real domain objects
-dofile("Domain/Armor.lua")
-dofile("Domain/Damage.lua")
-dofile("Domain/Melee.lua")
-dofile("Domain/Resistance.lua")
-dofile("Domain/MobLevel.lua")
+dofile("src/Domain/Armor.lua")
+dofile("src/Domain/Damage.lua")
+dofile("src/Domain/Melee.lua")
+dofile("src/Domain/Resistance.lua")
+dofile("src/Domain/MobLevel.lua")
 
 -- Load drawers to test
-dofile("Presentation/Drawers/ArmorDrawer.lua")
-dofile("Presentation/Drawers/MeleeDrawer.lua")
-dofile("Presentation/Drawers/ResistancesDrawer.lua")
+dofile("src/Presentation/Drawers/ArmorDrawer.lua")
+dofile("src/Presentation/Drawers/MeleeDrawer.lua")
+dofile("src/Presentation/Drawers/ResistancesDrawer.lua")
 
 -- Load infrastructure and application layers
-dofile("Infrastructure/GameAPI.lua")
-dofile("Application/ApplicationService.lua")
+dofile("src/Infrastructure/GameAPI.lua")
+dofile("src/Application/ApplicationService.lua")
 
 return MobStats

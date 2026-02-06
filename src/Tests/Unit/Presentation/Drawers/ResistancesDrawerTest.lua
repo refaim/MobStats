@@ -2,8 +2,8 @@
 -- Tests for ResistancesDrawer
 
 local lu = require('luaunit')
-require('Tests.Support.Mocks.MockEnvironment')
-local MockTooltipInterface = require('Tests.Support.Mocks.MockTooltipInterface')
+require('src.Tests.Support.Mocks.MockEnvironment')
+local MockTooltipInterface = require('src.Tests.Support.Mocks.MockTooltipInterface')
 
 TestResistancesDrawer = {}
 

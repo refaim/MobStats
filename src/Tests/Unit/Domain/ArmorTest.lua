@@ -2,7 +2,7 @@
 -- Tests for ArmorVO domain object
 
 local lu = require('luaunit')
-require('Tests.Support.Mocks.MockEnvironment')
+require('src.Tests.Support.Mocks.MockEnvironment')
 
 TestArmor = {}
 
