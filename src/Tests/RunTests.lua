@@ -6,8 +6,8 @@
 package.path = "?.lua;" .. package.path
 
 -- Clean old coverage files
-os.remove("bin/luacov.stats.out")
-os.remove("bin/luacov.report.out")
+os.remove("coverage/luacov.stats.out")
+os.remove("coverage/luacov.report.out")
 
 -- Start LuaCov for code coverage
 require("luacov")
@@ -62,7 +62,7 @@ reporter:close()
 
 -- Check 100% coverage
 print("Checking coverage...")
-local report = assert(io.open("bin/luacov.report.out", "r"), "Error: luacov.report.out not found")
+local report = assert(io.open("coverage/luacov.report.out", "r"), "Error: luacov.report.out not found")
 
 for line in report:lines() do
     ---@cast line string

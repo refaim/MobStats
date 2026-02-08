@@ -2,8 +2,8 @@
 -- Configuration for LuaCov code coverage
 
 return {
-    statsfile = "bin/luacov.stats.out",
-    reportfile = "bin/luacov.report.out",
+    statsfile = "coverage/luacov.stats.out",
+    reportfile = "coverage/luacov.report.out",
 
     -- Include only the modules we want to measure
     include = {

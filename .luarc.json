@@ -15,5 +15,5 @@
     "diagnostics.disable": ["deprecated", "unused"],
     "runtime.version": "Lua 5.1",
     "type.inferParamType": true,
-    "workspace.library": ["types/wow-api"]
+    "workspace.library": ["types/wow-api/Client", "types/wow-api/UI_Turtle"]
 }
